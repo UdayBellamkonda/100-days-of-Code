@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="root">
+      <script
+        crossorigin
+        src="https://unpkg.com/react@18/umd/react.development.js"
+      ></script>
+      <script
+        crossorigin
+        src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"
+      ></script>
+
+      <script src ="./App.js"></script>
+    </div>
+  </body>
+</html>
+
+
+write a select statement that returns these columns from the invoices table: The invoice_numbercolumn The invoice_date column The invoice_date column plus 30 days The payment_date column A column named days_to_pay that shows the number of days between the invoice date and the payment date The number of the invoice date's month The four-digit year of the invoice date when you have this working, add a WHERE clause that retrieves just the invoices for the month of may based on the invoice date, not the number of the invoice month
+SELECT
+  invoice_number,
+  invoice_date,
+  DATE_ADD(invoice_date, INTERVAL 30 DAY) AS invoice_date_plus_30_days,
+  payment_date,
+  DATEDIFF(payment_date, invoice_date) AS days_to_pay,
+  MONTH(invoice_date) AS invoice_month,
+  YEAR(invoice_date) AS invoice_year
+FROM
+  invoices
+WHERE
+  MONTH(invoice_date)>’2018-04-30’ AND invoice_date < ‘2018-06-01’;
+
+>>>write a select statement that returns these columns from the invoice table of the AP database:
+The invoice_number column
+The balance due for each invoice with a balance due greater than zero.A column that uses the RANK() function to rank the balance due in descending sequence.(19th oct photo)
+
+SELECT
+  invoice_number, 
+  balance_due,
+  RANK() OVER (ORDER BY balance_due DESC) AS balance_due_rank
+FROM
+  AP.invoice
+WHERE
+  balance_due > 0;
+
